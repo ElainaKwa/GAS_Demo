@@ -58,12 +58,17 @@ void ABaseCharacter::OnStrengthAttributeChange(const FOnAttributeChangeData& Dat
 
 FGameplayAbilityInfo ABaseCharacter::GetAbilityInfo(TSubclassOf<UBaseGameplayAbility> AbilityClass, int level)
 {
+	if (!AbilityClass)
+    {
+        return FGameplayAbilityInfo();
+    }
+	
 	UAbilitySystemComponent* MyAbilitySystemComponent = this->FindComponentByClass<UAbilitySystemComponent>();
 	
-	UBaseGameplayAbility* AbilityIncetance = AbilityClass->GetDefaultObject<UBaseGameplayAbility>();
-	if (MyAbilitySystemComponent && AbilityIncetance )
+	UBaseGameplayAbility* AbilityInstance = AbilityClass->GetDefaultObject<UBaseGameplayAbility>();
+	if (MyAbilitySystemComponent && AbilityInstance )
 	{
-		return AbilityIncetance->GetAbilityInfo(level);
+		return AbilityInstance->GetAbilityInfo(level);
 	}
 	return FGameplayAbilityInfo();
 }
